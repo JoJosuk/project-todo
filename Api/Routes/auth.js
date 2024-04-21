@@ -5,6 +5,17 @@ const { query } = require("../utils/db");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 
+router.post("/checkusername", async (req, res) => {
+  const username = req.body.username;
+  const user = await query("SELECT * FROM usertable WHERE username = $1", [
+    username,
+  ]);
+  if (user.length > 0) {
+    return res.status(400).json({ message: "Username allready taken" });
+  }
+  return res.status(200).json({ message: "Username available" });
+});
+
 router.post("/register", async (req, res) => {
   const { username, password, name } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
