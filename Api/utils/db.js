@@ -3,7 +3,6 @@ const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 
 const hello = process.env.DATABASE_URL;
-console.log(hello);
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
