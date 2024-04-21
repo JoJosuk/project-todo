@@ -1,12 +1,14 @@
-import { Pool } from "pg";
+const { Pool } = require("pg");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
+require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 
+const hello = process.env.DATABASE_URL;
+console.log(hello);
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-export const query = async (text, params) => {
+const query = async (text, params) => {
   const client = await pool.connect();
   try {
     await client.query("BEGIN"); // Start a transaction
@@ -20,3 +22,5 @@ export const query = async (text, params) => {
     await client.release();
   }
 };
+
+module.exports = { query };
