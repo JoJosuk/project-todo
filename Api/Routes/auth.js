@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { query } = require("../utils/db");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
@@ -18,6 +19,7 @@ router.post("/checkusername", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { username, password, name } = req.body;
+  console.log(username, password, name);
   const hashedPassword = await bcrypt.hash(password, 10);
   const altuser = await query("SELECT * FROM usertable WHERE username = $1", [
     username,
@@ -41,13 +43,10 @@ router.post("/register", async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    return res
-      .cookie("token", accesstoken, {
-        httpOnly: true,
-      })
-      .json({ message: "User created" });
+    return res.json({ message: "User registered", token: accesstoken });
   } catch (e) {
-    return res.status(500).json({ message: "Internal server error" });
+    console.log(e);
+    return res.status(500).json({ message: "Internal server error", error: e });
   }
 });
 
@@ -68,11 +67,8 @@ router.post("/login", async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    return res
-      .cookie("token", accesstoken, {
-        httpOnly: true,
-      })
-      .json({ message: "Login successful" });
+
+    return res.json({ message: "User logged in", token: accesstoken });
   } else {
     return res.status(400).json({ message: "Invalid password" });
   }
