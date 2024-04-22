@@ -66,3 +66,14 @@ router.put("/", async (req, res) => {
 });
 
 module.exports = router;
+
+router.delete("/", async (req, res) => {
+  const tokencookie = req.cookies.token;
+  const userdata = await checkuser(tokencookie);
+  if (userdata === "failed") {
+    return res.status(401).json({ message: "Not authorized" });
+  }
+  const { id } = req.body;
+  await query("DELETE FROM project WHERE id = $1", [id]);
+  return res.json({ message: "Project deleted" });
+});
