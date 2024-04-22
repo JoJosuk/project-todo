@@ -43,7 +43,8 @@ router.post("/register", async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    return res.json({ message: "User registered", token: accesstoken });
+    res.cookie("token", accesstoken, { httpOnly: true });
+    return res.json({ message: "User registered" });
   } catch (e) {
     console.log(e);
     return res.status(500).json({ message: "Internal server error", error: e });
@@ -68,7 +69,9 @@ router.post("/login", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    return res.json({ message: "User logged in", token: accesstoken });
+    res.cookie("token", accesstoken, { httpOnly: true });
+
+    return res.json({ message: "User logged in" });
   } else {
     return res.status(400).json({ message: "Invalid password" });
   }

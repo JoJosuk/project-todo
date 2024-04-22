@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useState } from "react";
 import axios from "axios";
@@ -13,18 +14,11 @@ export default function Login() {
     try {
       const response = await axios.post(
         "http://localhost:5000/auth/login",
-        data
+        data,
+        { withCredentials: true }
       );
-      console.log("in try", response);
-      if (response.data.token !== undefined) {
-        localStorage.setItem("token", response.data.token);
-        window.location.href = "/";
-      }
-      console.log("in try", response);
+      window.location.href = "/dashboard";
     } catch (e) {
-      console.log("error is ", e);
-      console.log("error is ", e.response);
-      console.log("error data ", e.response.data);
       alert("Invalid credentials");
     }
   };

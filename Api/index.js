@@ -4,14 +4,16 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 
 const authRouter = require("./Routes/auth");
+const projectRouter = require("./Routes/project");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/auth", authRouter);
+app.use("/project", projectRouter);
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });

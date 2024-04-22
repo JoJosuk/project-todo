@@ -16,12 +16,10 @@ export default function Signup() {
     try {
       const response = await axios.post(
         "http://localhost:5000/auth/register",
-        data
+        data,
+        { withCredentials: true }
       );
-      if (response.data.token !== undefined) {
-        localStorage.setItem("token", response.data.token);
-        window.location.href = "/";
-      }
+      window.location.href = "/login";
       console.log("in try", response);
     } catch (e) {
       console.log("error is ", e);
