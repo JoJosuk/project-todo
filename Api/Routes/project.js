@@ -38,7 +38,16 @@ router.post("/", async (req, res) => {
     "INSERT INTO project (title, description, user_id) VALUES ($1, $2, $3)",
     [title, description, userdata.id]
   );
-  return res.json({ message: "Project created" });
+  const requireddata = await query("SELECT * FROM project WHERE user_id =$1 ", [
+    userdata.id,
+  ]);
+
+  return res.json({
+    message: "Project created",
+    id: requireddata[requireddata.length - 1].id,
+    title: requireddata[requireddata.length - 1].title,
+    description: requireddata[requireddata.length - 1].description,
+  });
 });
 
 router.put("/", async (req, res) => {
@@ -65,8 +74,6 @@ router.put("/", async (req, res) => {
   return res.json({ message: "Project updated" });
 });
 
-module.exports = router;
-
 router.delete("/", async (req, res) => {
   const tokencookie = req.cookies.token;
   const userdata = await checkuser(tokencookie);
@@ -77,3 +84,5 @@ router.delete("/", async (req, res) => {
   await query("DELETE FROM project WHERE id = $1", [id]);
   return res.json({ message: "Project deleted" });
 });
+
+module.exports = router;
