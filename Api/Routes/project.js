@@ -15,7 +15,6 @@ const checkuser = async (token) => {
 };
 router.get("/", async (req, res) => {
   const tokencookie = req.cookies.token;
-  console.log(tokencookie);
   const userdata = await checkuser(tokencookie);
   if (userdata === "failed") {
     return res.status(401).json({ message: "Not authorized" });
@@ -76,6 +75,7 @@ router.put("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
   const tokencookie = req.cookies.token;
+  console.log("tokencookie", tokencookie);
   const userdata = await checkuser(tokencookie);
   if (userdata === "failed") {
     return res.status(401).json({ message: "Not authorized" });
