@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+require("dotenv").config({});
 
 const authRouter = require("./Routes/auth");
 const projectRouter = require("./Routes/project");
@@ -10,7 +11,7 @@ const gistRouter = require("./Routes/gist");
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
 app.use(express.json());
 app.use(cookieParser());
 

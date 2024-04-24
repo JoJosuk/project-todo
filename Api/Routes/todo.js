@@ -3,7 +3,9 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { query } = require("../utils/db");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
+require("dotenv").config({});
+
+// require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 const checkuser = async (token) => {
   try {
     const userdata = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
