@@ -12,13 +12,13 @@ const checkuser = async (token) => {
     return "failed";
   }
 };
-router.get("/", async (req, res) => {
+router.post("/get", async (req, res) => {
   const tokencookie = req.cookies.token;
   const userdata = await checkuser(tokencookie);
   if (userdata === "failed") {
     return res.status(401).json({ message: "Not authorized" });
   }
-  const { project_id } = req.query;
+  const { project_id } = req.body;
   const todos = await query("SELECT * FROM todo WHERE project_id = $1", [
     project_id,
   ]);
@@ -79,3 +79,27 @@ router.put("/", async (req, res) => {
   ]);
   return res.json({ message: "Todo updated" });
 });
+router.put("/status", async (req, res) => {
+  const tokencookie = req.cookies.token;
+  const userdata = await checkuser(tokencookie);
+  if (userdata === "failed") {
+    return res.status(401).json({ message: "Not authorized" });
+  }
+  let { status, id } = req.body;
+
+  const prevdata = await query("SELECT * FROM todo WHERE id = $1", [id]);
+  if (prevdata.length === 0) {
+    return res.status(400).json({ message: "Todo not found" });
+  }
+  if (prevdata[0].status === status) {
+    return res.status(400).json({ message: "No change in status" });
+  }
+  await query("UPDATE todo SET status = $1, updated_date = $2 WHERE id = $3", [
+    status,
+    new Date(),
+    id,
+  ]);
+  return res.json({ message: "Todo updated" });
+});
+
+module.exports = router;

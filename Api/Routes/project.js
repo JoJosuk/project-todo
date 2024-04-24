@@ -19,9 +19,10 @@ router.get("/", async (req, res) => {
   if (userdata === "failed") {
     return res.status(401).json({ message: "Not authorized" });
   }
-  const projects = await query("SELECT * FROM project WHERE user_id = $1", [
-    userdata.id,
-  ]);
+  const projects = await query(
+    "SELECT * FROM project WHERE user_id = $1 ORDER BY id",
+    [userdata.id]
+  );
   return res.json({ projects, name: userdata.name });
 });
 

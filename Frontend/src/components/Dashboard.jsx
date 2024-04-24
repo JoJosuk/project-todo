@@ -39,6 +39,13 @@ export default function Dashboard() {
     setReload(!reload);
     onOpen();
   };
+  const onOpenEditProject = async (project) => {
+    setProjectid(project.id);
+    setProjectDescription(project.description);
+    setProjectTitle(project.title);
+    setReload(!reload);
+    onOpen();
+  };
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:5000/project/", {
@@ -66,7 +73,7 @@ export default function Dashboard() {
                     shadow="sm"
                     key={index}
                     isPressable
-                    onPress={() => console.log("item pressed")}
+                    onClick={() => onOpenEditProject(project)}
                   >
                     <CardBody className="p-0 overflow-visible">
                       <Image
@@ -82,7 +89,10 @@ export default function Dashboard() {
                       <b>{project.title}</b>
                       <div
                         className="p-1 text-red-500 rounded-sm hover:bg-red-200"
-                        onClick={() => deleteProject(project.id)}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          deleteProject(project.id);
+                        }}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +122,8 @@ export default function Dashboard() {
             id={projectid}
             title={projectTitle}
             description={projectDescription}
+            setReload={setReload}
+            reload={reload}
           />
         </div>
       </div>
