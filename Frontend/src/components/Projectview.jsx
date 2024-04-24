@@ -38,6 +38,7 @@ export default function Projectview({
   const [reloadTodos, setReloadTodos] = useState(false);
   const [newtodotitle, setNewTodoTitle] = useState("");
   const [ratio, setRatio] = useState([0, 0]);
+  const [fetch, setFetch] = useState(false);
   // const textarearef = useRef(null);
   const updateStatus = async (idhere, status) => {
     const response = await axios.put(
@@ -50,11 +51,15 @@ export default function Projectview({
     );
     setReloadTodos(!reloadTodos);
   };
+  useEffect(() => {
+    setProjectTitle(title);
+    setProjectDescription(description);
+    setFetch(true);
+  }, [title, description, id]);
 
   useEffect(() => {
     let tempratio = [0, 0];
-    setProjectTitle(title);
-    setProjectDescription(description);
+
     const fetchData = async () => {
       setLoading(true);
       let tempTodoTitles = {};
@@ -82,10 +87,11 @@ export default function Projectview({
       console.log("set todos", response.data.todos);
       setLoading(false);
     };
-    if (id) {
+
+    if (id !== "" || description !== "" || title !== "") {
       fetchData();
     }
-  }, [title, description, reloadTodos]);
+  }, [reloadTodos, id]);
   useEffect(() => {
     if (debouncedTitle && id != "") {
       axios
@@ -118,9 +124,7 @@ export default function Projectview({
           },
           { withCredentials: true }
         )
-        .then((response) => {
-          setReload(!reload);
-        })
+        .then((response) => {})
         .catch((err) => {
           console.log("error", err);
         });
