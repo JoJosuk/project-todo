@@ -14,16 +14,19 @@ export default function Dashboard() {
   const [projects, setProjects] = useState([]);
   const [name, setName] = useState("");
   const deleteProject = async (projectid) => {
-    const response = await axios.delete(`http://localhost:5000/project/`, {
-      data: { id: projectid },
-      withCredentials: true,
-    });
+    const response = await axios.delete(
+      `https://project-todo-5qul.onrender.com/project/`,
+      {
+        data: { id: projectid },
+        withCredentials: true,
+      }
+    );
     console.log(response.data);
     setReload(!reload);
   };
   const onOpenProject = async () => {
     const response = await axios.post(
-      "http://localhost:5000/project/",
+      "https://project-todo-5qul.onrender.com/project/",
       {
         title: "Untitled",
         description: "Here goes description",
@@ -49,9 +52,12 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/project/", {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          "https://project-todo-5qul.onrender.com/project/",
+          {
+            withCredentials: true,
+          }
+        );
         setProjects(response.data.projects);
         setName(response.data.name);
       } catch (error) {

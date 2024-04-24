@@ -10,7 +10,12 @@ const gistRouter = require("./Routes/gist");
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://cute-chimera-e2b29a.netlify.app/login",
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

@@ -41,7 +41,7 @@ export default function Projectview({
   // const textarearef = useRef(null);
   const updateStatus = async (idhere, status) => {
     const response = await axios.put(
-      "http://localhost:5000/todo/status",
+      "https://project-todo-5qul.onrender.com/todo/status",
       {
         id: idhere,
         status: status,
@@ -59,7 +59,7 @@ export default function Projectview({
       setLoading(true);
       let tempTodoTitles = {};
       const response = await axios.post(
-        `http://localhost:5000/todo/get/`,
+        `https://project-todo-5qul.onrender.com/todo/get/`,
         {
           project_id: id,
         },
@@ -90,7 +90,7 @@ export default function Projectview({
     if (debouncedTitle && id != "") {
       axios
         .put(
-          "http://localhost:5000/project/",
+          "https://project-todo-5qul.onrender.com/project/",
           {
             id: id,
             title: projectTitle,
@@ -110,7 +110,7 @@ export default function Projectview({
     if (debouncedDescription && id != "") {
       axios
         .put(
-          "http://localhost:5000/project/",
+          "https://project-todo-5qul.onrender.com/project/",
           {
             id: id,
             title: projectTitle,
@@ -130,7 +130,7 @@ export default function Projectview({
     if (changedtodoid) {
       axios
         .put(
-          "http://localhost:5000/todo/",
+          "https://project-todo-5qul.onrender.com/todo/",
           {
             id: changedtodoid,
             title: todotitles[changedtodoid],
@@ -151,7 +151,7 @@ export default function Projectview({
     console.log("new todo", newtodotitle);
     if (newtodotitle != "") {
       const response = await axios.post(
-        "http://localhost:5000/todo/",
+        "https://project-todo-5qul.onrender.com/todo/",
         {
           title: newtodotitle,
           project_id: id,
@@ -165,7 +165,7 @@ export default function Projectview({
   const gistfetch = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/gist/",
+        "https://project-todo-5qul.onrender.com/gist/",
         {
           title: projectTitle,
           description: projectDescription,

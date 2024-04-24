@@ -16,7 +16,7 @@ import axios from "axios";
 export default function Navigationbar({ name }) {
   const logout = async () => {
     const response = await axios.post(
-      "http://localhost:5000/auth/logout",
+      "https://project-todo-5qul.onrender.com/auth/logout",
       {},
       {
         withCredentials: true,

@@ -15,7 +15,7 @@ export default function Signup() {
     console.log("in try", data);
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/register",
+        "https://project-todo-5qul.onrender.com/auth/register",
         data,
         { withCredentials: true }
       );
