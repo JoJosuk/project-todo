@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const { query } = require("../utils/db");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
+// require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 const { Octokit } = require("@octokit/core");
 
 const octokit = new Octokit({

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { query } = require("../utils/db");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
+// require("dotenv").config({ path: path.join(__dirname, "../..", ".env") });
 
 router.post("/checkusername", async (req, res) => {
   const username = req.body.username;
