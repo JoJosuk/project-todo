@@ -13,7 +13,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: "https://cute-chimera-e2b29a.netlify.app/login",
+    origin: "https://cute-chimera-e2b29a.netlify.app",
   })
 );
 app.use(express.json());
