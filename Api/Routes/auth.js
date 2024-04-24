@@ -47,6 +47,7 @@ router.post("/register", async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
+      partitioned: true,
     });
     return res.json({ message: "User registered" });
   } catch (e) {
