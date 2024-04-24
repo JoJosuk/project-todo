@@ -61,7 +61,6 @@ export default function Dashboard() {
   return (
     <div className="w-full min-h-screen bg-stone-900">
       <Navigationbar name={name} />
-      <div>hey</div>
       <div className="flex justify-center w-full">
         <div className="w-5/6">
           <h1>Projects</h1>

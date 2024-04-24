@@ -167,10 +167,27 @@ export default function Projectview({
       setNewTodoTitle("");
     }
   };
+  const gistfetch = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/gist/",
+        {
+          title: projectTitle,
+          description: projectDescription,
+          todos: todos,
+        },
+        { withCredentials: true }
+      );
+      window.open(response.data.url, "_blank");
+    } catch (err) {
+      alert("error while creating gist  ");
+    }
+  };
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
+      scrollBehavior="inside"
       placement="top-center"
       className="p-3 pt-6 dark"
       size="5xl"
@@ -276,7 +293,9 @@ export default function Projectview({
                 />
               </form>
             </ModalBody>
-            <ModalFooter></ModalFooter>
+            <ModalFooter>
+              <Button onPress={gistfetch}>Create a gist</Button>
+            </ModalFooter>
           </>
         )}
       </ModalContent>
