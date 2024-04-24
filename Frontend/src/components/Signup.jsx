@@ -19,7 +19,7 @@ export default function Signup() {
         data,
         { withCredentials: true }
       );
-      window.location.href = "/login";
+      window.location.href = "/";
       console.log("in try", response);
     } catch (e) {
       console.log("error is ", e);
