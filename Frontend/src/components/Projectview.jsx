@@ -12,6 +12,7 @@ import {
   Input,
   Link,
   Progress,
+  Textarea,
 } from "@nextui-org/react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -37,7 +38,7 @@ export default function Projectview({
   const [reloadTodos, setReloadTodos] = useState(false);
   const [newtodotitle, setNewTodoTitle] = useState("");
   const [ratio, setRatio] = useState([0, 0]);
-  const textarearef = useRef(null);
+  // const textarearef = useRef(null);
   const updateStatus = async (idhere, status) => {
     const response = await axios.put(
       "http://localhost:5000/todo/status",
@@ -144,12 +145,6 @@ export default function Projectview({
         });
     }
   }, [debouncedTodoTitles]);
-  const adjustHeight = () => {
-    if (textarearef.current) {
-      textarearef.current.style.height = "auto";
-      textarearef.current.style.height = `${textarearef.current.scrollHeight}px`;
-    }
-  };
 
   const newtodo = async (e) => {
     e.preventDefault();
@@ -201,22 +196,22 @@ export default function Projectview({
                 <>
                   <input
                     type="text"
-                    className="w-full text-2xl font-bold bg-transparent border-none outline-none"
+                    className="w-full text-3xl font-bold text-red-400 bg-transparent border-none outline-none"
                     value={projectTitle}
                     onChange={(e) => setProjectTitle(e.target.value)}
                   />
-                  <textarea
-                    className="w-full mt-2 text-white bg-transparent outline-none resize-none"
+
+                  <Textarea
                     value={projectDescription}
-                    ref={textarearef}
+                    label="Description"
                     onChange={(e) => {
                       setProjectDescription(e.target.value);
-                      adjustHeight();
                     }}
                   />
-                  <h1>Progress</h1>
                   {ratio[0] && (
                     <>
+                      <h1>Progress</h1>
+
                       <Progress
                         aria-label="progress"
                         size="md"
@@ -227,7 +222,7 @@ export default function Projectview({
                       />
                     </>
                   )}
-                  <h1>Completed</h1>
+                  <h1 className="text-xl font-bold ">Completed</h1>
                   {todos &&
                     todos.map((todo, index) => {
                       if (todo.status) {
@@ -239,9 +234,9 @@ export default function Projectview({
                                 updateStatus(todo.id, false)
                               }
                             ></Checkbox>
-                            <input
+
+                            <Input
                               type="text"
-                              className="w-full text-2xl font-bold "
                               value={todotitles[todo.id]}
                               onChange={(e) => {
                                 setTodotitles({
@@ -265,9 +260,8 @@ export default function Projectview({
                             <Checkbox
                               onChange={(event) => updateStatus(todo.id, true)}
                             ></Checkbox>
-                            <input
+                            <Input
                               type="text"
-                              className="w-full text-2xl font-bold "
                               value={todotitles[todo.id]}
                               onChange={(e) => {
                                 setTodotitles({
@@ -283,14 +277,16 @@ export default function Projectview({
                     })}
                 </>
               )}
-              <form onSubmit={newtodo}>
-                <h1>add todo here</h1>
-                <input
+              <form onSubmit={newtodo} className="flex items-center gap-1 p-2">
+                <Input
                   type="text"
-                  className="w-full text-2xl font-bold bg-transparent "
+                  label="add todo here"
                   value={newtodotitle}
                   onChange={(e) => setNewTodoTitle(e.target.value)}
                 />
+                <Button type="submit" color="success">
+                  Add
+                </Button>
               </form>
             </ModalBody>
             <ModalFooter>
