@@ -11,8 +11,19 @@ import {
   Avatar,
   AvatarIcon,
 } from "@nextui-org/react";
+import axios from "axios";
 // eslint-disable-next-line react/prop-types
 export default function Navigationbar({ name }) {
+  const logout = async () => {
+    const response = await axios.post(
+      "http://localhost:5000/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    window.location.href = "/";
+  };
   return (
     <Navbar>
       <NavbarBrand>
@@ -43,7 +54,7 @@ export default function Navigationbar({ name }) {
               <p className="font-semibold">{name}</p>
             </DropdownItem>
 
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onClick={logout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>

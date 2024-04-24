@@ -48,12 +48,18 @@ export default function Dashboard() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:5000/project/", {
-        withCredentials: true,
-      });
-      console.log(response);
-      setProjects(response.data.projects);
-      setName(response.data.name);
+      try {
+        const response = await axios.get("http://localhost:5000/project/", {
+          withCredentials: true,
+        });
+        setProjects(response.data.projects);
+        setName(response.data.name);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          alert("Please Login again or signup");
+          window.location.href = "/";
+        }
+      }
     };
     fetchData();
   }, [reload]);

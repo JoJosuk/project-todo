@@ -62,7 +62,6 @@ ${completedTasks.map((task) => `- [x] ${task}`).join("\n")}
         "X-GitHub-Api-Version": "2022-11-28",
       },
     });
-    console.log("Gist created:", response.data.html_url);
     res
       .status(200)
       .json({ message: "Gist created", url: response.data.html_url });
