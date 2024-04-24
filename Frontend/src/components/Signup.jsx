@@ -20,7 +20,7 @@ export default function Signup() {
         { withCredentials: true }
       );
       alert("User getting");
-      window.location.href = "/";
+      window.location.href = "/login";
       console.log("in try", response);
     } catch (e) {
       if (e.response.status === 400) {
