@@ -254,7 +254,7 @@ export default function Projectview({
                         );
                       }
                     })}
-                  <h1>Remaining</h1>
+                  <h1 className="text-xl font-bold ">Remaining</h1>
 
                   {todos &&
                     todos.map((todo, index) => {
