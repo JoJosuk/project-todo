@@ -19,12 +19,13 @@ export default function Signup() {
         data,
         { withCredentials: true }
       );
+      alert("User getting");
       window.location.href = "/";
       console.log("in try", response);
     } catch (e) {
-      console.log("error is ", e);
-      console.log("error is ", e.response);
-      console.log("error data ", e.response.data);
+      if (e.response.status === 400) {
+        alert("Username already taken");
+      }
     }
   };
   const [email, setEmail] = useState("");
@@ -97,26 +98,6 @@ export default function Signup() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full px-3 py-2 text-white border rounded-md shadow-sm appearance-none placeholder-stone-400 bg-stone-700 border-stone-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="checkpassword"
-                  className="block text-sm font-medium text-white"
-                >
-                  Confirm Password
-                </label>
-                <div className="mt-1">
-                  <input
-                    id="checkpassword"
-                    name="checkpassword"
-                    type="password"
-                    required
-                    value={checkpassword}
-                    onChange={(e) => setCheckPassword(e.target.value)}
                     className="block w-full px-3 py-2 text-white border rounded-md shadow-sm appearance-none placeholder-stone-400 bg-stone-700 border-stone-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
