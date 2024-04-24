@@ -43,7 +43,11 @@ router.post("/register", async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    res.cookie("token", accesstoken, { httpOnly: true, sameSite: "none" });
+    res.cookie("token", accesstoken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
     return res.json({ message: "User registered" });
   } catch (e) {
     console.log(e);
@@ -69,7 +73,11 @@ router.post("/login", async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    res.cookie("token", accesstoken, { httpOnly: true, sameSite: "none" });
+    res.cookie("token", accesstoken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
 
     return res.json({ message: "User logged in" });
   } else {
