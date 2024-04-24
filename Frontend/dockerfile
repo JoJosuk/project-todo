@@ -1,0 +1,19 @@
+FROM node:18-alpine 
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm i
+
+COPY . .
+
+RUN npm run build
+
+
+
+# Open the port to react
+EXPOSE 8080
+
+# Run nginx in the foreground
+CMD ["npm", "run", "preview"]
