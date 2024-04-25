@@ -13,6 +13,7 @@ import {
   Link,
   Progress,
   Textarea,
+  CircularProgress,
 } from "@nextui-org/react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -195,7 +196,7 @@ export default function Projectview({
         {(onClose) => (
           <>
             <ModalBody className="text-white">
-              {loading && <div>Loading...</div>}
+              {loading && <CircularProgress />}
               {!loading && (
                 <>
                   <input
