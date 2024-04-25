@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./utils/creationdb.js && node index.js"
   },
   "dependencies": {
     "@octokit/core": "^5.2.0",
