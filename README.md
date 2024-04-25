@@ -8,8 +8,12 @@
 
 [https://cute-chimera-e2b29a.netlify.app/](https://cute-chimera-e2b29a.netlify.app/)
 
-<h2>🛠️ Installation Steps:</h2>
+**Important Note**
 
+  Because this project is currently deployed on free instances, you might experience slower startup times. Please be patient while the application loads.
+  
+<h2>🛠️ Installation Steps:</h2>
+ 
 **1. Clone the Repository:**
 
 ```bash
