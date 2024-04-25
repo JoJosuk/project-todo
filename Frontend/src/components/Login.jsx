@@ -4,8 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { CircularProgress } from "@nextui-org/react";
 export default function Login() {
-  setLoading(true);
   const handlesubmit = async (e) => {
+      setLoading(true);
     e.preventDefault();
     console.log("in handle submit", email, password);
     const data = {
