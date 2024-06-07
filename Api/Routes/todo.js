@@ -19,9 +19,10 @@ router.post("/get", async (req, res) => {
     return res.status(401).json({ message: "Not authorized" });
   }
   const { project_id } = req.body;
-  const todos = await query("SELECT * FROM todo WHERE project_id = $1", [
-    project_id,
-  ]);
+  const todos = await query(
+    "SELECT * FROM todo WHERE project_id = $1 and rbin=false",
+    [project_id]
+  );
   return res.json({ todos });
 });
 
@@ -102,4 +103,54 @@ router.put("/status", async (req, res) => {
   return res.json({ message: "Todo updated" });
 });
 
+router.delete("/", async (req, res) => {
+  const id = req.body.id;
+  const prevdata = await query("SELECT * FROM todo WHERE id = $1", [id]);
+  if (prevdata.length === 0) {
+    return res.status(400).json({ message: "Todo not found" });
+  }
+  try {
+    await query("UPDATE todo SET rbin= true WHERE id = $1", [id]);
+    return res.json({ message: "Todo move tp recycle bin" });
+  } catch (e) {
+    return res.status(400).json({ message: "Todo not moved" });
+  }
+});
+
+router.get("/rbin", async (req, res) => {
+  const tokencookie = req.cookies.token;
+  const userdata = await checkuser(tokencookie);
+
+  try {
+    let todotable = await query(
+      "select * from todo where project_id in (select id from project where user_id= $1) and rbin=true",
+      [userdata.id]
+    );
+    console.log(todotable);
+    return res.json({ todotable });
+  } catch (e) {
+    return res.json({ e });
+  }
+});
+
+router.put("/restore", async (req, res) => {
+  const id = req.body.id;
+  try {
+    await query("UPDATE todo SET rbin= false WHERE id = $1", [id]);
+    return res.json({ message: "Todo move out recycle bin" });
+  } catch (e) {
+    return res.status(400).json({ message: "Todo not moved" });
+  }
+});
+
+router.post("/permanent", async (req, res) => {
+  const id = req.body.id;
+  console.log("id", id);
+  try {
+    await query("Delete from todo where id = $1", [id]);
+    return res.json({ message: "permanently deleted" });
+  } catch (e) {
+    return res.status(400).json({ message: "not able to permanently delete" });
+  }
+});
 module.exports = router;

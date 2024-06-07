@@ -250,6 +250,27 @@ export default function Projectview({
                                 setChangedTodoId(todo.id);
                               }}
                             />
+                            <Button
+                              color="danger"
+                              onClick={async () => {
+                                try {
+                                  await axios.delete(
+                                    "http://localhost:5000/todo/",
+                                    {
+                                      data: {
+                                        id: todo.id,
+                                      },
+                                    }
+                                  );
+                                  setReloadTodos(!reloadTodos);
+                                } catch (e) {
+                                  console.log(e);
+                                }
+                              }}
+                            >
+                              {" "}
+                              Del
+                            </Button>
                           </div>
                         );
                       }
@@ -275,6 +296,27 @@ export default function Projectview({
                                 setChangedTodoId(todo.id);
                               }}
                             />
+                            <Button
+                              color="danger"
+                              onClick={async () => {
+                                try {
+                                  await axios.delete(
+                                    "http://localhost:5000/todo/",
+                                    {
+                                      data: {
+                                        id: todo.id,
+                                      },
+                                    }
+                                  );
+                                  setReloadTodos(!reloadTodos);
+                                } catch (e) {
+                                  console.log(e);
+                                }
+                              }}
+                            >
+                              {" "}
+                              Del
+                            </Button>{" "}
                           </div>
                         );
                       }

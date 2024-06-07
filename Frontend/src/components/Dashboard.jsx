@@ -13,6 +13,9 @@ export default function Dashboard() {
   const [reload, setReload] = useState(false);
   const [projects, setProjects] = useState([]);
   const [name, setName] = useState("");
+  const onOpenRbin = () => {
+    window.location.href = "/rbin";
+  };
   const deleteProject = async (projectid) => {
     const response = await axios.delete(`http://localhost:5000/project/`, {
       data: { id: projectid },
@@ -32,7 +35,6 @@ export default function Dashboard() {
         withCredentials: true,
       }
     );
-    console.log("the data is ", response.data);
     setProjectid(response.data.id);
     setProjectDescription(response.data.description);
     setProjectTitle(response.data.title);
@@ -120,6 +122,7 @@ export default function Dashboard() {
               })}
           </div>
           <Button onPress={onOpenProject}>➕ Add Project</Button>
+          <Button onPress={onOpenRbin}>Recycle bin</Button>
           <Projectview
             isOpen={isOpen}
             onOpenChange={onOpenChange}
